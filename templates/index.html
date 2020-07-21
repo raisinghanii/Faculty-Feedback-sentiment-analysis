@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Faculty Feedback Form</title>
+
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.3/animate.min.css">
+	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700">
+
+	<style type="text/css">
+
+		* {
+    box-sizing: border-box;
+  }
+
+body {
+	margin: 0;
+	font-family: "Montserrat"!important;
+}
+
+.wrapper {
+	background-image: url('https://i.ibb.co/NFg8hZT/map.png');
+	/*background-image: linear-gradient(to bottom right, green, darkgreen);*/
+	/*background-size: cover;
+	-ms-background-size: cover;
+	-o-background-size: cover;
+	-moz-background-size: cover;
+	-webkit-background-size: cover*/
+
+	background-position: center;
+	 background-size: cover;
+	background-repeat: no-repeat;
+	 position: relative;
+}
+
+.wrapper:before{
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.6);
+}
+
+h1 {
+
+	font-family: "Montserrat";
+	color: black;
+
+}
+
+textarea {
+	resize: none;
+	border: none;
+	border-bottom: 2px solid black;
+}
+
+.center{
+    padding: 30px;
+ 	/*background-image: linear-gradient(to top right, #b721ff 0%, #08aeea 100%);*/
+ 	background-color: black;
+  	border-radius: 10px 10px 0 0;
+  	box-shadow: 0 0 8px black;
+	color: white;
+}
+
+.char{
+    font-size: 30px;
+    height: 40px;
+    animation: an 1s ease-out 1 both;
+    display: inline-block;
+}
+
+@keyframes an{
+    from{
+        opacity: 0;
+        transform: perspective(500px) translate3d(-35px, -40px, -150px) rotate3d(1, -1, 0, 35deg);
+    }
+    to{
+        opacity: 1;
+        transform: perspective(500px) translate3d(0, 0, 0);
+    }
+}
+.error {
+	color: tomato;
+}
+
+.error-field {
+	box-shadow: 0 0 8px red;
+}
+
+.mt {
+
+ 	padding: 30px;
+ 	/*background-image: linear-gradient(to top right, #b721ff 0%, #08aeea 100%);*/
+ 	background-color: white;
+  	border-radius: 0 0 10px 10px;
+  	box-shadow: 0 0 8px black;
+
+}
+
+form label {
+	font-weight: 500;
+}
+
+.submit_button {
+	background-image: linear-gradient(to bottom right, green, darkgreen);
+	font-weight: 500;
+	color: white;
+	border: 1px solid transparent;
+	border-color: #28a745;
+	text-align: center;
+	transition: all 0.5s;
+	vertical-align: middle;
+	font-size: 20px;
+	margin-top: 20px;
+	border-radius: 5px;
+	padding: 10px 28px;
+
+}
+
+.submit_button:focus {
+	border: none!important;
+}
+
+.temp span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.temp span:after {
+  	content: '\00bb';
+  	position: absolute;
+  	opacity: 0;
+  	top: 0;
+  	right: -20px;
+  	transition: 0.5s;
+}
+.submit_button:hover {
+	background-image: linear-gradient(to bottom right, darkgreen, green);
+}
+.temp:hover span {
+  	padding-right: 25px;
+}
+
+.temp:hover span:after {
+
+  opacity: 1;
+  right: 0;
+}
+
+.submit_button span:focus {
+
+}
+
+
+	</style>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mouse0270-bootstrap-notify/3.1.5/bootstrap-notify.min.js"></script>
+	<link href="vendor/select2/select2.min.css" rel="stylesheet" media="all">
+
+
+
+	</script>
+</head>
+<body>
+
+	<div class="container-fluid wrapper">
+  		<div class="row">
+  			<div class="col-sm-2 col-lg-2"></div>
+  			<div class="col-sm-8 col-lg-8 " style="padding: 20px;margin: 20px;">
+  				<div class="center text-center" style="width: 100%;top: 0;">
+					<h1 id="text" style="color: white;">Faculty Feedback Form</h1>
+				</div>
+
+  				<form class="form-group mt" style="padding: 50px;" action="{{ url_for('predict')}}" method="post">
+  					<label> Enter Faculty Name </label><br>
+  					<textarea class="form-control" id="form_que_1" name="fname" rows="4" cols="40"></textarea>
+  					<br><br>
+  					<label> Faculty Review </label><br>
+  					<textarea class="form-control" id="form_que_2" name="frev" rows="4" cols="40"></textarea>
+  					<br><br>
+  					<label> Enter Course Name</label><br>
+  					<textarea class="form-control" id="form_que_3" name="cname" rows="4" cols="40"></textarea>
+  					<br><br>
+  					<label> Course Review</label><br>
+  					<textarea class="form-control" id="form_que_4" name="crev" rows="4" cols="40"></textarea>
+  					<br><br>
+  					<center><p id="form-message"></p></center>
+  					<center><button type="submit" id="submit_button" class="submit_button temp"><span>Submit </span></button></center>
+  				</form>
+  			</div>
+  		</div>
+  	</div>
+
+
+  	<script>
+
+  		var text = document.getElementById('text');
+        var newDom = '';
+        var animationDelay = 6;
+
+        for(let i = 0; i < text.innerText.length; i++)
+        {
+            newDom += '<span class="char">' + (text.innerText[i] == ' ' ? '&nbsp;' : text.innerText[i])+ '</span>';
+        }
+
+        text.innerHTML = newDom;
+        var length = text.children.length;
+
+        for(let i = 0; i < length; i++)
+        {
+            text.children[i].style['animation-delay'] = animationDelay * i + 'ms';
+        }
+
+  	</script>
+
+</body>
+</html>
